@@ -1,16 +1,182 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Demo</title>
-    <style>
-      html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
-      #game { width: 100%; height: 100%; }
-    </style>
-  </head>
-  <body>
-    <div id="game"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Бункер</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="stage">
+  <div id="phone">
+    <svg id="scene" viewBox="0 0 390 844" xmlns="http://www.w3.org/2000/svg" aria-label="Бункер в разрезе">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#A2DADF"/>
+          <stop offset="1" stop-color="#EAF3DD"/>
+        </linearGradient>
+        <linearGradient id="soil" gradientUnits="userSpaceOnUse" x1="0" y1="236" x2="0" y2="844">
+          <stop offset="0" stop-color="#85593C"/>
+          <stop offset=".16" stop-color="#7D5337"/>
+          <stop offset=".16" stop-color="#6C462E"/>
+          <stop offset=".53" stop-color="#633F29"/>
+          <stop offset=".53" stop-color="#553623"/>
+          <stop offset="1" stop-color="#3E271A"/>
+        </linearGradient>
+        <pattern id="speck" patternUnits="userSpaceOnUse" width="52" height="46">
+          <circle cx="6" cy="8" r="1.6" fill="rgba(0,0,0,.16)"/>
+          <circle cx="30" cy="4" r="1" fill="rgba(255,255,255,.08)"/>
+          <circle cx="42" cy="22" r="2.2" fill="rgba(0,0,0,.12)"/>
+          <circle cx="18" cy="30" r="1.2" fill="rgba(255,255,255,.07)"/>
+          <circle cx="8" cy="40" r="1.4" fill="rgba(0,0,0,.14)"/>
+          <circle cx="36" cy="40" r=".9" fill="rgba(255,255,255,.08)"/>
+        </pattern>
+        <radialGradient id="lampGlow">
+          <stop offset="0" stop-color="#FFE59A" stop-opacity=".75"/>
+          <stop offset=".45" stop-color="#FFE59A" stop-opacity=".22"/>
+          <stop offset="1" stop-color="#FFE59A" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#FFE59A" stop-opacity=".32"/>
+          <stop offset="1" stop-color="#FFE59A" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="growLight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#D88BFF" stop-opacity=".45"/>
+          <stop offset="1" stop-color="#D88BFF" stop-opacity="0"/>
+        </linearGradient>
+        <pattern id="hazardStripe" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+          <rect width="8" height="8" fill="#FFC531"/>
+          <rect width="4" height="8" fill="#22252B"/>
+        </pattern>
+      </defs>
+
+      <!-- sky and surface -->
+      <rect width="390" height="240" fill="url(#sky)"/>
+      <circle cx="322" cy="104" r="40" fill="#FFF3C4" opacity=".45"/>
+      <circle cx="322" cy="104" r="23" fill="#FFF0B5"/>
+      <g class="drift slow" opacity=".95">
+        <g fill="#FFFFFF">
+          <circle cx="40" cy="128" r="13"/><circle cx="58" cy="122" r="17"/><circle cx="78" cy="129" r="12"/>
+          <rect x="40" y="128" width="40" height="13" rx="6.5"/>
+        </g>
+      </g>
+      <g class="drift" style="animation-delay:-38s" opacity=".85">
+        <g fill="#FFFFFF">
+          <circle cx="10" cy="160" r="9"/><circle cx="24" cy="155" r="12"/><circle cx="39" cy="160" r="8"/>
+          <rect x="10" y="160" width="30" height="9" rx="4.5"/>
+        </g>
+      </g>
+      <path d="M0 206 Q50 186 110 200 T230 196 T390 188 V240 H0Z" fill="#C9E6CB"/>
+      <path d="M0 220 Q80 202 160 216 T300 210 T390 214 V240 H0Z" fill="#AFD8B3"/>
+
+      <!-- house -->
+      <g>
+        <rect x="34" y="171" width="86" height="65" fill="#F4F0E6"/>
+        <rect x="34" y="171" width="86" height="7" fill="#E4DED0"/>
+        <polygon points="26,174 77,136 128,174" fill="#4E6B78"/>
+        <polygon points="26,174 77,136 77,142 34,174" fill="#5E7E8C"/>
+        <rect x="96" y="141" width="11" height="22" fill="#3F5864"/>
+        <rect x="46" y="200" width="20" height="36" rx="2" fill="#8C5B3F"/>
+        <circle cx="61" cy="219" r="1.6" fill="#FFC531"/>
+        <rect x="80" y="187" width="26" height="20" rx="2" fill="#FFD66B"/>
+        <rect x="92" y="187" width="2.5" height="20" fill="#F4F0E6"/>
+        <rect x="80" y="196" width="26" height="2.5" fill="#F4F0E6"/>
+      </g>
+      <!-- fence -->
+      <g fill="#E9E2D2">
+        <rect x="134" y="216" width="62" height="3"/><rect x="134" y="226" width="62" height="3"/>
+        <rect x="136" y="210" width="4" height="26" rx="1"/><rect x="148" y="210" width="4" height="26" rx="1"/>
+        <rect x="160" y="210" width="4" height="26" rx="1"/><rect x="172" y="210" width="4" height="26" rx="1"/>
+        <rect x="184" y="210" width="4" height="26" rx="1"/>
+      </g>
+      <!-- tree -->
+      <g class="sway">
+        <rect x="331" y="194" width="10" height="44" rx="3" fill="#7A5235"/>
+        <circle cx="336" cy="182" r="25" fill="#5DA65A"/>
+        <circle cx="316" cy="194" r="16" fill="#4F9550"/>
+        <circle cx="356" cy="196" r="15" fill="#4F9550"/>
+        <circle cx="328" cy="172" r="10" fill="#79BF6E"/>
+      </g>
+
+      <!-- ground -->
+      <rect x="0" y="236" width="390" height="608" fill="url(#soil)"/>
+      <rect x="0" y="236" width="390" height="608" fill="url(#speck)"/>
+      <g id="deco"></g>
+      <path d="M0 238 V231 Q6 226 12 231 Q18 225 24 231 Q30 227 36 231 Q42 225 48 231 Q54 227 60 231 Q66 225 72 231 Q78 227 84 231 Q90 225 96 231 Q102 227 108 231 Q114 225 120 231 Q126 227 132 231 Q138 225 144 231 Q150 227 156 231 Q162 225 168 231 Q174 227 180 231 Q186 225 192 231 Q198 227 204 231 Q210 225 216 231 Q222 227 228 231 Q234 225 240 231 Q246 227 252 231 Q258 225 264 231 Q270 227 276 231 Q282 225 288 231 Q294 227 300 231 Q306 225 312 231 Q318 227 324 231 Q330 225 336 231 Q342 227 348 231 Q354 225 360 231 Q366 227 372 231 Q378 225 384 231 Q390 227 390 231 V238 Z" fill="#74BE5C"/>
+      <rect x="0" y="237" width="390" height="4" fill="#4C8B45"/>
+
+      <g id="rooms"></g>
+      <g id="links"></g>
+      <g id="cells"></g>
+      <g id="modules"></g>
+      <g id="actors"></g>
+      <g id="fx"></g>
+
+      <!-- hatch on the surface sits above the ladder -->
+      <g id="hatch">
+        <rect x="207" y="228" width="34" height="10" rx="3" fill="url(#hazardStripe)"/>
+        <rect x="207" y="228" width="34" height="10" rx="3" fill="none" stroke="#22252B" stroke-width="1.5" opacity=".5"/>
+        <g transform="rotate(-58 241 229)">
+          <rect x="207" y="223" width="34" height="7" rx="3.5" fill="#AEB5BC"/>
+          <circle cx="224" cy="226.5" r="2.4" fill="#7E868E"/>
+        </g>
+      </g>
+      <g id="bubbles"></g>
+    </svg>
+
+    <div class="hud">
+      <div class="money" id="moneyPill">
+        <svg class="coin" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="#FFC531"/><circle cx="14" cy="14" r="9.5" fill="#FFD866"/><text x="14" y="19" text-anchor="middle" font-family="Unbounded" font-weight="800" font-size="13" fill="#9A6A00">$</text></svg>
+        <span id="money">$1 000 000</span>
+      </div>
+      <div class="war" title="Время до начала войны">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#fff"/><circle cx="12" cy="12" r="2.2" fill="#E04B3A"/><path d="M12 9.2 L8.2 2.8 A10 10 0 0 1 15.8 2.8 Z M14.4 13.4 L21.8 13.4 A10 10 0 0 1 18 20 Z M9.6 13.4 L6 20 A10 10 0 0 1 2.2 13.4 Z" fill="#E04B3A"/></svg>
+        <span><small>до войны</small><b><span id="war">365</span> дн.</b></span>
+      </div>
+      <div class="reserve" id="reservePill">
+        <svg viewBox="0 0 16 16"><path d="M8 1 L14 3.5 V8 C14 11.5 11.4 14 8 15 C4.6 14 2 11.5 2 8 V3.5 Z" fill="#2F6F6A"/><path d="M5.2 8.2 L7.2 10.2 L11 6.2" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Бункер продержится <b id="days">0</b>&nbsp;дн.
+      </div>
+    </div>
+
+    <div class="toast" id="toast"><div class="ico" id="toastIco"></div><div id="toastText"></div></div>
+
+    <div class="bottom">
+      <div class="hint">
+        <div class="ava">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="25" r="11" fill="#F4C9A3"/><path d="M8.5 22 Q9 10 20 10 Q31 10 31.5 22 Z" fill="#2F6F6A"/><rect x="8" y="19" width="24" height="5" rx="2.5" fill="#23544F"/><circle cx="24" cy="26" r="1.5" fill="#22252B"/><circle cx="27" cy="29" r="2" fill="#F29C84" opacity=".55"/><rect x="9" y="36" width="22" height="8" rx="4" fill="#F26B3A"/></svg>
+        </div>
+        <p id="hint">Это твой бункер. Пока тут одна комната.</p>
+      </div>
+      <nav class="tabs">
+        <button class="tab on" type="button">
+          <svg viewBox="0 0 20 20"><path d="M3 17 L11 9" stroke="#22252B" stroke-width="2.4" stroke-linecap="round"/><path d="M10 4 Q15 3 17 8 L13.5 10.5 L9.5 6.5 Z" fill="#22252B"/></svg>
+          Стройка
+        </button>
+        <button class="tab" type="button" data-soon>
+          <svg viewBox="0 0 20 20"><circle cx="7" cy="7" r="3.2" fill="#EADFD3"/><path d="M1.5 17 Q2 11 7 11 Q12 11 12.5 17 Z" fill="#EADFD3"/><circle cx="14" cy="8" r="2.6" fill="#EADFD3" opacity=".7"/><path d="M12 12 Q17 11 18.5 17 H13.5" fill="#EADFD3" opacity=".7"/></svg>
+          Жители <span class="count" id="people">1</span>
+        </button>
+        <button class="tab" type="button" data-soon>
+          <svg viewBox="0 0 20 20"><rect x="2.5" y="7" width="15" height="10" rx="2" fill="#EADFD3"/><rect x="2" y="4" width="16" height="4.5" rx="1.5" fill="#EADFD3" opacity=".7"/><rect x="8" y="9.5" width="4" height="2.5" rx="1" fill="#2A1C14"/></svg>
+          Запасы
+        </button>
+      </nav>
+    </div>
+
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="grab"></div>
+      <h2 id="sheetTitle">Что поставим в комнату?</h2>
+      <p class="sub">Комнату можно будет улучшить позже.</p>
+      <div class="cards" id="cards"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
 </html>
